@@ -2,22 +2,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { orderSchema } from "../lib/OrderFormSchema";
 import { useState } from "react";
+import { errorMessages } from "../utils/errorMessages";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
-function errorMessages(err) {
-  if (
-    err.message.includes("NetworkError") ||
-    err.message.includes("Failed to fetch") ||
-    err.message.includes("fetch")
-  )
-    return "Cannot reach the server. Make sure the backend is running.";
-  if (err.message.includes("500"))
-    return "Something went wrong on the server. Try again later.";
-  if (err.message.includes("400"))
-    return "Invalid input. Please check your entries.";
-  return err.message;
-}
 
 export default function OrderForm({ onOrderCreated }) {
   const [formError, setFormError] = useState(null);
@@ -37,15 +24,17 @@ export default function OrderForm({ onOrderCreated }) {
     setSuccessMsg(null);
 
     try {
-      const res = await fetch(API_URL, {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || `Error: ${res.status}`);
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(
+          `Server error: ${response.status} ${text || response.statusText}`,
+        );
       }
 
       setSuccessMsg("Order created successfully!");
@@ -55,6 +44,7 @@ export default function OrderForm({ onOrderCreated }) {
 
       onOrderCreated();
     } catch (err) {
+      console.error("[OrderForm] Submission error:", err);
       setFormError(errorMessages(err));
     }
   };

@@ -1,22 +1,9 @@
 import { useState, useEffect } from "react";
 import OrderForm from "./components/OrderForm";
 import OrderList from "./components/OrderList";
+import { errorMessages } from "./utils/errorMessages";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
-const errorMessages = (err) => {
-  if (
-    err.message.includes("NetworkError") ||
-    err.message.includes("Failed to fetch") ||
-    err.message.includes("fetch")
-  )
-    return "Cannot reach the server. Make sure the backend is running.";
-  if (err.message.includes("500"))
-    return "Something went wrong on the server. Try again later.";
-  if (err.message.includes("400"))
-    return "Invalid input. Please check your entries.";
-  return err.message;
-};
 
 export default function App() {
   const [orders, setOrders] = useState([]);
@@ -33,13 +20,17 @@ export default function App() {
     setError(null);
 
     try {
-      const res = await fetch(API_URL);
+      const response = await fetch(API_URL);
 
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      if (!response.ok)
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`,
+        );
 
-      const data = await res.json();
+      const data = await response.json();
       setOrders(data);
     } catch (err) {
+      console.error("[Orders API]", err);
       setError(errorMessages(err));
     } finally {
       setLoading(false);
