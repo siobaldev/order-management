@@ -40,7 +40,7 @@ This project is a simple Order Management application built with ASP.NET Core We
 ## Project Structure
 
 ```txt
-OrderManagement/
+order-management/
 │
 ├── backend/
 │   └── OrderManagement.API/
