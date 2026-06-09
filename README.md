@@ -98,7 +98,7 @@ npm install
 Create a `.env` file based on `.env.example` and set the API URL:
 
 ```env
-VITE_API_URL=https://localhost:5001/api
+VITE_API_URL=https://localhost:5001/api/orders
 ```
 
 Replace the URL with the backend URL shown by `dotnet run` if it differs.
@@ -120,7 +120,7 @@ The ASP.NET Core API is configured with a CORS policy that allows requests from 
 Example `.env.example`:
 
 ```env
-VITE_API_URL=https://localhost:5001/api
+VITE_API_URL=https://localhost:5001/api/orders
 ```
 
 Update the value if the backend is running on a different port in your local environment.
