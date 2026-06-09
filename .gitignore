@@ -1,0 +1,23 @@
+# Backend (.NET)
+**/bin/
+**/obj/
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+
+# Frontend
+**/node_modules/
+**/dist/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# OS / IDE
+.vscode/
+.idea/
+.DS_Store
