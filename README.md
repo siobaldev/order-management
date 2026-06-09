@@ -23,6 +23,7 @@ This project is a simple Order Management application built with ASP.NET Core We
 
 - React
 - Vite
+- Tailwind CSS
 - React Hook Form
 - Zod
 - Fetch API
