@@ -4,6 +4,13 @@
 
 This project is a simple Order Management application built with ASP.NET Core Web API and React. Users can create new orders and view existing orders through a responsive dashboard.
 
+## Prerequisites
+
+- .NET SDK 8.0
+- Node.js (v18+ recommended)
+- npm / yarn / pnpm
+- dotnet-ef CLI tool (for migrations)
+
 ## Tech Stack
 
 ### Backend
@@ -58,6 +65,14 @@ Restore packages:
 dotnet restore
 ```
 
+If this is the first time running the project locally, apply migrations to generate the database:
+
+```bash
+dotnet ef database update
+```
+
+This will create orders.db locally. Do not commit this file, it is ignored by .gitignore.
+
 Run the API:
 
 ```bash
@@ -109,3 +124,9 @@ VITE_API_URL=https://localhost:5001/api
 ```
 
 Update the value if the backend is running on a different port in your local environment.
+
+## Notes
+
+- Ensure backend is running before starting frontend
+- If ports differ, update `VITE_API_URL` in `.env`
+- Database file is auto-generated via EF Core migrations
